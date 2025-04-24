@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}User Book App{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; margin: 0; }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #eee;
+            padding: 10px;
+            text-align: center;
+        }
+        a { margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/add_user">Add User</a>
+        {% if all_users %}
+        <div>
+            <span>Add Book for:</span>
+            {% for u in all_users %}
+                <a href="{{ url_for('add_book', user_id=u.id) }}">{{ u.name }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+    <footer>
+        &copy; 2025 Flask User Book App
+    </footer>
+</body>
+</html>

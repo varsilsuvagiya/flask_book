@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}All Users{% endblock %}
+{% block content %}
+<h2>All Users</h2>
+<table border="1" cellpadding="5">
+    <tr><th>ID</th><th>Username</th><th>Books</th><th>Actions</th></tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.books|length }}</td>
+        <td>
+            <a href="/user/{{ user.id }}">View Books</a>
+            <a href="/delete_user/{{ user.id }}" onclick="return confirm('Delete user and all books?')">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
