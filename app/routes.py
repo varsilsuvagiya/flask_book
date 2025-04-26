@@ -1,7 +1,7 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for,flash
 from app import app, db
 from app.models import Book,User
-
+from app import forms
 
 # very important (user data access from any page)
 @app.context_processor
@@ -69,3 +69,14 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('index'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register_form():
+    form = forms.RegisterForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        # You can store user in database here if needed
+        flash(f"User {username} registered with email {email}!", "success")
+        return redirect(url_for('index'))  # Change to your home route
+    return render_template('register.html', form=form)

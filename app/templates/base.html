@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>{% block title %}User Book App{% endblock %}</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; margin: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+
         footer {
             position: fixed;
             bottom: 0;
@@ -13,9 +19,13 @@
             padding: 10px;
             text-align: center;
         }
-        a { margin-right: 10px; }
+
+        a {
+            margin-right: 10px;
+        }
     </style>
 </head>
+
 <body>
     <nav>
         <a href="/">Home</a>
@@ -24,16 +34,26 @@
         <div>
             <span>Add Book for:</span>
             {% for u in all_users %}
-                <a href="{{ url_for('add_book', user_id=u.id) }}">{{ u.name }}</a>
+            <a href="{{ url_for('add_book', user_id=u.id) }}">{{ u.name }}</a>
             {% endfor %}
         </div>
         {% endif %}
 
     </nav>
     <hr>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash-message">
+        <strong>{{ category.title() }}:</strong> {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
     <footer>
         &copy; 2025 Flask User Book App
     </footer>
 </body>
+
 </html>
